@@ -10,12 +10,12 @@ from flask import Flask
 # Flask Setup
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')  # Secret key for sessions and CSRF
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  # PostgreSQL URI from Supabase
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('postgresql://postgres:[YOUR-PASSWORD]@db.ezszgyrkgqzpsyjfvmxo.supabase.co:5432/postgres')  # PostgreSQL URI from Supabase
 db = SQLAlchemy(app)
 
 # Initialize Supabase Client
-supabase_url = os.getenv('SUPABASE_URL')  # Your Supabase URL
-supabase_key = os.getenv('SUPABASE_KEY')  # Your Supabase Key
+supabase_url = os.getenv('https://ezszgyrkgqzpsyjfvmxo.supabase.co')  # Your Supabase URL
+supabase_key = os.getenv('process.env.SUPABASE_KEY')  # Your Supabase Key
 supabase: Client = create_client(supabase_url, supabase_key)
 
 # Form for Login and Registration
