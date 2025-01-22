@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Welcome, {{ username }}</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <h2>Routers</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Serial Number</th>
+            <th>Model</th>
+            <th>Status</th>
+        </tr>
+        {% for router in routers %}
+        <tr>
+            <td>{{ router.id }}</td>
+            <td>{{ router.serial_number }}</td>
+            <td>{{ router.model }}</td>
+            <td>{{ router.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="container">
+        <h1>Router Tracker</h1>
+        <div class="actions">
+            <a href="{{ url_for('add_router') }}" class="btn">Add Router</a>
+            <a href="{{ url_for('add_agent') }}" class="btn">Add Agent</a>
+            <a href="{{ url_for('assign_router') }}" class="btn">Assign Router</a>
+            <a href="{{ url_for('return_router') }}" class="btn">Return Router</a>
+        </div>
+        <h2>Routers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Serial Number</th>
+                    <th>Model</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for router in routers %}
+                <tr>
+                    <td>{{ router.id }}</td>
+                    <td>{{ router.serial_number }}</td>
+                    <td>{{ router.model }}</td>
+                    <td>{{ router.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Agents</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Employee ID</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agent in agents %}
+                <tr>
+                    <td>{{ agent.id }}</td>
+                    <td>{{ agent.name }}</td>
+                    <td>{{ agent.employee_id }}</td>
+                    <td>{{ agent.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Assignments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Router ID</th>
+                    <th>Agent ID</th>
+                    <th>Assignment Date</th>
+                    <th>Return Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignment in assignments %}
+                <tr>
+                    <td>{{ assignment.router_id }}</td>
+                    <td>{{ assignment.agent_id }}</td>
+                    <td>{{ assignment.assignment_date }}</td>
+                    <td>{{ assignment.return_date if assignment.return_date else 'Active' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+<script>
+    fetch('/api/routers')
+    .then(response => response.json())
+    .then(data => {
+        let tableBody = document.querySelector("#routerTable tbody");
+        data.forEach(router => {
+            let row = `<tr>
+                <td>${router.id}</td>
+                <td>${router.serial_number}</td>
+                <td>${router.model}</td>
+                <td>${router.status}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    });
+</script>

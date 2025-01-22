@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFF9E6; /* Light yellow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Login Container */
+        .login-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+            border-top: 5px solid #FFCC00; /* AA yellow */
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #000000; /* Black */
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #FFCC00; /* AA yellow */
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Button Styling */
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFCC00; /* AA yellow */
+            border: none;
+            color: #000000; /* Black text */
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #E6B800; /* Slightly darker yellow */
+        }
+
+        /* Register Link */
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #FFCC00; /* AA yellow */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 style="color: #000000;">Login</h2> <!-- Black heading -->
+        <form method="POST" class="login-form">
+            {{ form.hidden_tag() }}
+            <div class="input-group">
+                <label>{{ form.username.label }}</label>
+                {{ form.username(class="input-field") }}
+            </div>
+            <div class="input-group">
+                <label>{{ form.password.label }}</label>
+                {{ form.password(class="input-field") }}
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="register-link">
+            Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+        </p>
+    </div>
+</body>
+</html>
