@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from dotenv import load_dotenv
+from markupsafe import Markup
 
 # Load environment variables
 load_dotenv()
