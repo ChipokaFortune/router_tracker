@@ -15,8 +15,6 @@
     
     <div class="container">
         <h1>Router Tracker</h1>
-    <div class="container">
-        <h1>Router Tracker</h1>
         <div class="actions">
             <a href="{{ url_for('add_router') }}" class="btn">Add Router</a>
             <a href="{{ url_for('add_agent') }}" class="btn">Add Agent</a>
@@ -34,9 +32,7 @@
                     <th>Status</th>
                 </tr>
             </thead>
-            <tbody id="routerTable">
-                <!-- Routers will be inserted here dynamically -->
-            </tbody>
+            <tbody id="routerTable"></tbody>
         </table>
 
         <h2>Agents</h2>
@@ -49,9 +45,7 @@
                     <th>Email</th>
                 </tr>
             </thead>
-            <tbody id="agentTable">
-                <!-- Agents will be inserted here dynamically -->
-            </tbody>
+            <tbody id="agentTable"></tbody>
         </table>
 
         <h2>Assignments</h2>
@@ -64,62 +58,65 @@
                     <th>Return Date</th>
                 </tr>
             </thead>
-            <tbody id="assignmentTable">
-                <!-- Assignments will be inserted here dynamically -->
-            </tbody>
+            <tbody id="assignmentTable"></tbody>
         </table>
     </div>
 
     <script>
-        // Fetch routers from Flask API and populate table
-        fetch('/api/routers')
-        .then(response => response.json())
-        .then(data => {
-            let tableBody = document.querySelector("#routerTable");
-            tableBody.innerHTML = "";  // Clear table before inserting new data
-            data.forEach(router => {
-                let row = `<tr>
-                    <td>${router.id}</td>
-                    <td>${router.serial_number}</td>
-                    <td>${router.model}</td>
-                    <td>${router.status}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fetch routers from Flask API and populate table
+            fetch('/api/routers')
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector("#routerTable");
+                    tableBody.innerHTML = "";  
+                    data.forEach(router => {
+                        let row = `<tr>
+                            <td>${router.id}</td>
+                            <td>${router.serial_number}</td>
+                            <td>${router.model}</td>
+                            <td>${router.status}</td>
+                        </tr>`;
+                        tableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                })
+                .catch(error => console.error("Error fetching routers:", error));
 
-        // Fetch agents and populate agent table
-        fetch('/api/agents')
-        .then(response => response.json())
-        .then(data => {
-            let tableBody = document.querySelector("#agentTable");
-            tableBody.innerHTML = "";
-            data.forEach(agent => {
-                let row = `<tr>
-                    <td>${agent.id}</td>
-                    <td>${agent.name}</td>
-                    <td>${agent.employee_id}</td>
-                    <td>${agent.email}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
-        });
+            // Fetch agents and populate agent table
+            fetch('/api/agents')
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector("#agentTable");
+                    tableBody.innerHTML = "";
+                    data.forEach(agent => {
+                        let row = `<tr>
+                            <td>${agent.id}</td>
+                            <td>${agent.name}</td>
+                            <td>${agent.employee_id}</td>
+                            <td>${agent.email}</td>
+                        </tr>`;
+                        tableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                })
+                .catch(error => console.error("Error fetching agents:", error));
 
-        // Fetch assignments and populate assignment table
-        fetch('/api/assignments')
-        .then(response => response.json())
-        .then(data => {
-            let tableBody = document.querySelector("#assignmentTable");
-            tableBody.innerHTML = "";
-            data.forEach(assignment => {
-                let row = `<tr>
-                    <td>${assignment.router_id}</td>
-                    <td>${assignment.agent_id}</td>
-                    <td>${assignment.assignment_date}</td>
-                    <td>${assignment.return_date ? assignment.return_date : 'Active'}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
+            // Fetch assignments and populate assignment table
+            fetch('/api/assignments')
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector("#assignmentTable");
+                    tableBody.innerHTML = "";
+                    data.forEach(assignment => {
+                        let row = `<tr>
+                            <td>${assignment.router_id}</td>
+                            <td>${assignment.agent_id}</td>
+                            <td>${assignment.assignment_date}</td>
+                            <td>${assignment.return_date ? assignment.return_date : 'Active'}</td>
+                        </tr>`;
+                        tableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                })
+                .catch(error => console.error("Error fetching assignments:", error));
         });
     </script>
 
