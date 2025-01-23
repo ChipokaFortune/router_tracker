@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from dotenv import load_dotenv
-from markupsafe import Markup
 
 # Load environment variables
 load_dotenv()
@@ -37,7 +36,7 @@ class RegisterForm(FlaskForm):
 # Routes
 @app.route('/')
 def index():
-    username = "User123"  # Replace with dynamic username
+    username = "Fortune"  # Replace with actual logic
     return render_template('index.html', username=username)
 
 @app.route('/login', methods=['GET', 'POST'])
